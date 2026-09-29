@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVL | ARABIC VIRTUAL LEAGUE — Tickets</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --gold:#f5c542;
+  --gold2:#ffdf70;
+  --blue:#071b38;
+  --blue2:#0c2d58;
+  --bg:#020814;
+  --white:#fff;
+  --muted:#aebbd0;
+  --green:#27d17f;
+}
+
+body{
+  min-height:100vh;
+  font-family:"Cairo",sans-serif;
+  color:white;
+  background:
+    radial-gradient(circle at 50% -10%,#174b88 0%,transparent 35%),
+    radial-gradient(circle at 10% 80%,#102d55 0%,transparent 30%),
+    #020814;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:45px 45px;
+  mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+/* COMMON */
+.hidden{
+  display:none!important;
+}
+
+.page{
+  width:100%;
+  min-height:100vh;
+  position:relative;
+  z-index:2;
+}
+
+.container{
+  width:min(1100px,92%);
+  margin:auto;
+}
+
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+
+/* INTRO */
+#intro{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+  animation:fadeIn 1.2s ease;
+}
+
+.intro-box{
+  position:relative;
+  width:min(800px,100%);
+  padding:55px 25px;
+}
+
+.glow{
+  position:absolute;
+  width:280px;
+  height:280px;
+  background:rgba(245,197,66,.18);
+  filter:blur(80px);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  animation:pulse 3s infinite;
+}
+
+.avl-logo{
+  position:relative;
+  width:150px;
+  height:150px;
+  margin:0 auto 25px;
+  border:3px solid var(--gold);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#0e315c,#030b17);
+  box-shadow:
+    0 0 25px rgba(245,197,66,.35),
+    inset 0 0 35px rgba(245,197,66,.12);
+  animation:float 3s ease-in-out infinite;
+}
+
+.avl-logo::before{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50%;
+}
+
+.avl-logo span{
+  font-size:44px;
+  font-weight:900;
+  color:var(--gold);
+  letter-spacing:-3px;
+}
+
+.intro-title{
+  position:relative;
+  font-size:clamp(35px,7vw,70px);
+  font-weight:900;
+  letter-spacing:4px;
+  background:linear-gradient(90deg,#fff,var(--gold2),#fff);
+  background-size:200%;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:shine 3s linear infinite;
+}
+
+.intro-sub{
+  position:relative;
+  color:#d4deed;
+  font-size:clamp(13px,2vw,18px);
+  margin-top:5px;
+  letter-spacing:2px;
+}
+
+.welcome{
+  position:relative;
+  margin:30px auto;
+  max-width:650px;
+  line-height:2;
+  color:#dce5f3;
+}
+
+.welcome b{
+  color:var(--gold2);
+}
+
+.get-ticket{
+  position:relative;
+  border:0;
+  padding:17px 55px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#f5c542,#ffdf70);
+  color:#071426;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 0 30px rgba(245,197,66,.25);
+  transition:.3s;
+}
+
+.get-ticket:hover{
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 10px 40px rgba(245,197,66,.4);
+}
+
+/* HEADER */
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(15px);
+  background:rgba(2,8,20,.78);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.header-inner{
+  min-height:75px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  font-size:22px;
+  font-weight:900;
+  color:var(--gold);
+}
+
+.brand small{
+  display:block;
+  font-size:9px;
+  letter-spacing:2px;
+  color:#c6d1e0;
+  font-weight:600;
+}
+
+.step{
+  color:#aebbd0;
+  font-size:13px;
+}
+
+/* FORM */
+.section{
+  padding:50px 0;
+  animation:slideUp .5s ease;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:35px;
+}
+
+.section-title h1{
+  font-size:clamp(27px,5vw,42px);
+  font-weight:900;
+}
+
+.section-title p{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.form-card{
+  max-width:700px;
+  margin:auto;
+  padding:30px;
+  background:rgba(8,25,49,.72);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:22px;
+  box-shadow:0 20px 70px rgba(0,0,0,.25);
+  backdrop-filter:blur(12px);
+}
+
+.field{
+  margin-bottom:20px;
+  text-align:right;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  color:#d5dfec;
+  margin-bottom:8px;
+  font-weight:700;
+}
+
+.field input,
+.field select{
+  width:100%;
+  height:52px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.12);
+  background:#06172d;
+  color:white;
+  padding:0 15px;
+  outline:none;
+  font-family:inherit;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(245,197,66,.08);
+}
+
+.primary{
+  width:100%;
+  border:0;
+  height:54px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#071426;
+  font-weight:900;
+  font-size:16px;
+  margin-top:8px;
+  transition:.25s;
+}
+
+.primary:hover{
+  transform:translateY(-2px);
+}
+
+/* ROUNDS */
+.round-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  max-width:900px;
+  margin:0 auto 35px;
+}
+
+.round-btn{
+  min-height:85px;
+  border-radius:16px;
+  border:1px solid rgba(245,197,66,.25);
+  background:linear-gradient(145deg,rgba(12,45,88,.9),rgba(5,17,34,.9));
+  color:white;
+  font-weight:900;
+  font-size:17px;
+  transition:.3s;
+}
+
+.round-btn:hover,
+.round-btn.active{
+  border-color:var(--gold);
+  box-shadow:0 0 25px rgba(245,197,66,.15);
+  transform:translateY(-3px);
+}
+
+.matches{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.match-card{
+  position:relative;
+  padding:25px;
+  min-height:145px;
+  border-radius:18px;
+  background:
+    linear-gradient(145deg,rgba(14,43,79,.95),rgba(4,15,30,.96));
+  border:1px solid rgba(255,255,255,.1);
+  overflow:hidden;
+  transition:.3s;
+}
+
+.match-card::before{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:120px;
+  background:rgba(245,197,66,.08);
+  border-radius:50%;
+  right:-50px;
+  top:-50px;
+}
+
+.match-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(245,197,66,.5);
+}
+
+.match-round{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.teams{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  font-size:20px;
+  font-weight:900;
+  margin:14px 0 18px;
+  direction:ltr;
+}
+
+.vs{
+  color:var(--gold);
+  font-size:12px;
+}
+
+.buy{
+  width:100%;
+  height:43px;
+  border:1px solid rgba(245,197,66,.45);
+  background:rgba(245,197,66,.08);
+  color:var(--gold2);
+  border-radius:9px;
+  font-weight:900;
+  transition:.25s;
+}
+
+.buy:hover{
+  background:var(--gold);
+  color:#071426;
+}
+
+/* TICKET OPTIONS */
+.back-btn{
+  background:none;
+  border:0;
+  color:#aebbd0;
+  margin-bottom:20px;
+  font-weight:700;
+}
+
+.match-title{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  margin-bottom:30px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.info{
+  padding:16px;
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.info span{
+  display:block;
+  font-size:11px;
+  color:#8fa1b8;
+}
+
+.info strong{
+  display:block;
+  margin-top:4px;
+}
+
+.seats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin:25px 0;
+}
+
+.seat{
+  position:relative;
+}
+
+.seat input{
+  display:none;
+}
+
+.seat label{
+  display:block;
+  padding:25px 10px;
+  text-align:center;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#071a32;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.seat label strong{
+  display:block;
+  font-size:18px;
+}
+
+.seat label span{
+  color:var(--gold);
+  font-size:13px;
+  font-weight:800;
+}
+
+.seat input:checked + label{
+  border-color:var(--gold);
+  background:rgba(245,197,66,.12);
+  box-shadow:0 0 25px rgba(245,197,66,.12);
+  transform:translateY(-3px);
+}
+
+/* TICKET */
+.ticket-wrap{
+  padding:40px 0 70px;
+}
+
+.ticket{
+  width:min(700px,100%);
+  margin:auto;
+  background:#f6f3e8;
+  color:#101820;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 30px 90px rgba(0,0,0,.5);
+  position:relative;
+}
+
+.ticket-top{
+  padding:25px;
+  background:linear-gradient(135deg,#061a34,#0d3767);
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+
+.ticket-top::after{
+  content:"AVL";
+  position:absolute;
+  font-size:120px;
+  font-weight:900;
+  right:-15px;
+  top:-40px;
+  color:rgba(255,255,255,.04);
+}
+
+.ticket-brand{
+  font-size:27px;
+  font-weight:900;
+  color:var(--gold2);
+}
+
+.ticket-league{
+  font-size:11px;
+  letter-spacing:2px;
+  color:#b8c7da;
+}
+
+.ticket-match{
+  text-align:center;
+  margin-top:25px;
+  font-size:27px;
+  font-weight:900;
+  direction:ltr;
+}
+
+.ticket-round{
+  text-align:center;
+  margin-top:5px;
+  color:#bdcbe0;
+  font-size:12px;
+}
+
+.ticket-body{
+  padding:25px;
+}
+
+.ticket-data{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.ticket-data div{
+  border-bottom:1px dashed #c9c5b7;
+  padding-bottom:10px;
+}
+
+.ticket-data span{
+  display:block;
+  color:#777;
+  font-size:10px;
+  font-weight:700;
+}
+
+.ticket-data strong{
+  font-size:14px;
+}
+
+.ticket-bottom{
+  display:grid;
+  grid-template-columns:1fr 170px;
+  gap:20px;
+  align-items:center;
+  padding:20px 25px;
+  border-top:2px dashed #bbb5a5;
+}
+
+.qr{
+  background:white;
+  padding:8px;
+  width:150px;
+  height:150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.notice{
+  font-size:11px;
+  line-height:1.9;
+  color:#555;
+}
+
+.notice strong{
+  color:#172b42;
+}
+
+.ticket-id{
+  margin-top:10px;
+  font-size:10px;
+  color:#777;
+}
+
+.actions{
+  width:min(700px,100%);
+  margin:20px auto 0;
+  display:flex;
+  gap:10px;
+}
+
+.actions button{
+  flex:1;
+  height:50px;
+  border-radius:10px;
+  border:0;
+  font-weight:900;
+}
+
+.print{
+  background:var(--gold);
+  color:#071426;
+}
+
+.restart{
+  background:#102b4d;
+  color:white;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translate(-50%,30px);
+  background:#102b4d;
+  color:white;
+  border:1px solid rgba(245,197,66,.4);
+  padding:13px 20px;
+  border-radius:10px;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:100;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes pulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.2)}
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+@keyframes shine{
+  0%{background-position:0}
+  100%{background-position:200%}
+}
+
+/* MOBILE */
+@media(max-width:750px){
+  .round-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .matches{
+    grid-template-columns:1fr;
+  }
+
+  .seats{
+    grid-template-columns:1fr;
+  }
+
+  .ticket-bottom{
+    grid-template-columns:1fr;
+  }
+
+  .qr{
+    margin:auto;
+  }
+
+  .ticket-data{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .teams{
+    font-size:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<section id="intro" class="page">
+  <div class="intro-box">
+
+    <div class="glow"></div>
+
+    <div class="avl-logo">
+      <span>AVL</span>
+    </div>
+
+    <h1 class="intro-title">AVL</h1>
+
+    <div class="intro-sub">
+      ARABIC VIRTUAL LEAGUE
+    </div>
+
+    <p class="welcome">
+      نتمنى أن تستمتع لمباريات دوري
+      <b>ARABIC VIRTUAL LEAGUE</b>
+      وحظ سعيد
+      <br>
+      We hope you enjoy the ARABIC VIRTUAL LEAGUE matches. Good luck!
+    </p>
+
+    <button class="get-ticket" onclick="startTicket()">
+      GET TICKET
+    </button>
+
+  </div>
+</section>
+
+
+<!-- APP -->
+<main id="app" class="hidden">
+
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      AVL
+      <small>ARABIC VIRTUAL LEAGUE</small>
+    </div>
+    <div class="step" id="stepText">PLAYER INFORMATION</div>
+  </div>
+</header>
+
+
+<!-- USER FORM -->
+<section id="userSection" class="section">
+  <div class="container">
+
+    <div class="section-title">
+      <h1>Player Information</h1>
+      <p>أدخل معلوماتك للمتابعة إلى التذاكر</p>
+    </div>
+
+    <div class="form-card">
+
+      <div class="field">
+        <label>USER DISCORD</label>
+        <input id="discord" type="text" placeholder="Enter your Discord username">
+      </div>
+
+      <div class="field">
+        <label>USER ROBLOX</label>
+        <input id="roblox" type="text" placeholder="Enter your Roblox username">
+      </div>
+
+      <div class="field">
+        <label>YOUR RANKS IN AVL</label>
+        <select id="rank">
+          <option value="">Select your rank</option>
+          <option>Player</option>
+          <option>Captain</option>
+          <option>Manager</option>
+          <option>Owner</option>
+          <option>Referee</option>
+          <option>Staff</option>
+          <option>Fan</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>WHAT'S YOUR FAVOURITE TEAM</label>
+        <select id="favorite">
+          <option value="">Select your favourite team</option>
+          <option>KAC</option>
+          <option>KACM</option>
+          <option>WAC</option>
+          <option>CRB</option>
+          <option>JSK</option>
+          <option>RCA</option>
+          <option>MAS</option>
+          <option>IRT</option>
+        </select>
+      </div>
+
+      <button class="primary" onclick="saveUser()">
+        CONTINUE →
+      </button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ROUNDS -->
+<section id="roundSection" class="section hidden">
+  <div class="container">
+
+    <div class="section-title">
+      <h1>AVL FIXTURE S1</h1>
+      <p>Select a round to see its matches</p>
+    </div>
+
+    <div class="round-grid" id="roundGrid"></div>
+
+    <div id="matches" class="matches"></div>
+
+  </div>
+</section>
+
+
+<!-- BUY -->
+<section id="buySection" class="section hidden">
+  <div class="container">
+
+    <div class="form-card">
+
+      <button class="back-btn" onclick="backToMatches()">
+        ← BACK TO MATCHES
+      </button>
+
+      <div class="match-title" id="selectedMatchTitle"></div>
+
+      <div class="info-grid">
+        <div class="info">
+          <span>STADIUM</span>
+          <strong id="stadium">N/A</strong>
+        </div>
+
+        <div class="info">
+          <span>TIME</span>
+          <strong id="matchTime">N/A</strong>
+        </div>
+
+        <div class="info">
+          <span>ROUND</span>
+          <strong id="selectedRound"></strong>
+        </div>
+
+        <div class="info">
+          <span>STATUS</span>
+          <strong style="color:#27d17f">TICKETS AVAILABLE</strong>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom:10px;">PLACE OF SEAT</h3>
+
+      <div class="seats">
+
+        <div class="seat">
+          <input type="radio" name="seat" id="sud" value="SUD" data-price="10">
+          <label for="sud">
+            <strong>SUD</strong>
+            <span>10 ROBUX</span>
+          </label>
+        </div>
+
+        <div class="seat">
+          <input type="radio" name="seat" id="nord" value="NORD" data-price="20">
+          <label for="nord">
+            <strong>NORD</strong>
+            <span>20 ROBUX</span>
+          </label>
+        </div>
+
+        <div class="seat">
+          <input type="radio" name="seat" id="vip" value="VIP" data-price="50">
+          <label for="vip">
+            <strong>VIP</strong>
+            <span>50 ROBUX</span>
+          </label>
+        </div>
+
+      </div>
+
+      <button class="primary" onclick="confirmTicket()">
+        CONFIRM TICKET
+      </button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- TICKET -->
+<section id="ticketSection" class="ticket-wrap hidden">
+  <div class="container">
+
+    <div class="section-title">
+      <h1>Your AVL Ticket</h1>
+      <p>Ticket successfully created</p>
+    </div>
+
+    <div class="ticket" id="ticket">
+
+      <div class="ticket-top">
+
+        <div class="ticket-brand">AVL</div>
+        <div class="ticket-league">ARABIC VIRTUAL LEAGUE • SEASON 1</div>
+
+        <div class="ticket-match" id="ticketMatch"></div>
+        <div class="ticket-round" id="ticketRound"></div>
+
+      </div>
+
+      <div class="ticket-body">
+
+        <div class="ticket-data">
+
+          <div>
+            <span>DISCORD</span>
+            <strong id="ticketDiscord"></strong>
+          </div>
+
+          <div>
+            <span>ROBLOX</span>
+            <strong id="ticketRoblox"></strong>
+          </div>
+
+          <div>
+            <span>AVL RANK</span>
+            <strong id="ticketRank"></strong>
+          </div>
+
+          <div>
+            <span>FAVOURITE TEAM</span>
+            <strong id="ticketFavorite"></strong>
+          </div>
+
+          <div>
+            <span>STADIUM</span>
+            <strong>N/A</strong>
+          </div>
+
+          <div>
+            <span>TIME</span>
+            <strong>N/A</strong>
+          </div>
+
+          <div>
+            <span>SEAT</span>
+            <strong id="ticketSeat"></strong>
+          </div>
+
+          <div>
+            <span>PRICE</span>
+            <strong id="ticketPrice"></strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="ticket-bottom">
+
+        <div>
+          <div class="notice">
+            <strong>ملاحظة:</strong><br>
+            تم شراء التذكرة. عند برمجة الوقت والملعب سوف يتم إخباركم في سيرفر AVL وسوف تصبح التذكرة متاحة للاستعمال.
+            <br><br>
+            <strong>Notice:</strong><br>
+            Ticket purchased. Once the time and stadium are scheduled, you will be notified in the AVL server and the ticket will become available for use.
+          </div>
+
+          <div class="ticket-id">
+            TICKET ID: <span id="ticketId"></span>
+          </div>
+        </div>
+
+        <div class="qr" id="qrcode"></div>
+
+      </div>
+
+    </div>
+
+    <div class="actions">
+      <button class="print" onclick="window.print()">
+        PRINT / SAVE TICKET
+      </button>
+
+      <button class="restart" onclick="restart()">
+        BACK TO HOME
+      </button>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+/* =========================
+   AVL FIXTURES S1
+========================= */
+
+const fixtures = {
+
+  1:[
+    ["KAC","KACM"],
+    ["WAC","CRB"],
+    ["JSK","RCA"],
+    ["MAS","IRT"]
+  ],
+
+  2:[
+    ["JSK","IRT"],
+    ["MAS","KACM"],
+    ["WAC","KAC"],
+    ["RCA","CRB"]
+  ],
+
+  3:[
+    ["MAS","KAC"],
+    ["IRT","CRB"],
+    ["WAC","RCA"],
+    ["KACM","JSK"]
+  ],
+
+  4:[
+    ["WAC","KACM"],
+    ["RCA","IRT"],
+    ["CRB","KAC"],
+    ["MAS","JSK"]
+  ],
+
+  5:[
+    ["KAC","RCA"],
+    ["IRT","KACM"],
+    ["WAC","JSK"],
+    ["MAS","CRB"]
+  ],
+
+  6:[
+    ["RCA","KACM"],
+    ["IRT","KAC"],
+    ["CRB","JSK"],
+    ["MAS","WAC"]
+  ],
+
+  7:[
+    ["RCA","KAC"],
+    ["KACM","CRB"],
+    ["IRT","WAC"],
+    ["JSK","MAS"]
+  ],
+
+  8:[
+    ["RCA","IRT"],
+    ["KAC","JSK"],
+    ["KACM","MAS"],
+    ["CRB","WAC"]
+  ]
+
+};
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let userData = {};
+let selectedRound = null;
+let selectedMatch = null;
+
+
+/* =========================
+   START
+========================= */
+
+function startTicket(){
+
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================
+   SAVE USER
+========================= */
+
+function saveUser(){
+
+  const discord =
+    document.getElementById("discord").value.trim();
+
+  const roblox =
+    document.getElementById("roblox").value.trim();
+
+  const rank =
+    document.getElementById("rank").value;
+
+  const favorite =
+    document.getElementById("favorite").value;
+
+
+  if(!discord || !roblox || !rank || !favorite){
+
+    showToast("Please complete all information.");
+    return;
+  }
+
+
+  userData = {
+    discord,
+    roblox,
+    rank,
+    favorite
+  };
+
+
+  document.getElementById("userSection")
+    .classList.add("hidden");
+
+  document.getElementById("roundSection")
+    .classList.remove("hidden");
+
+  document.getElementById("stepText")
+    .textContent = "SELECT A ROUND";
+
+
+  createRounds();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================
+   ROUNDS
+========================= */
+
+function createRounds(){
+
+  const grid =
+    document.getElementById("roundGrid");
+
+  grid.innerHTML = "";
+
+  for(let i=1;i<=8;i++){
+
+    const button =
+      document.createElement("button");
+
+    button.className = "round-btn";
+
+    button.textContent =
+      "ROUND " + i;
+
+    button.onclick = () =>
+      showMatches(i,button);
+
+    grid.appendChild(button);
+  }
+}
+
+
+/* =========================
+   SHOW MATCHES
+========================= */
+
+function showMatches(round,button){
+
+  selectedRound = round;
+
+  document.querySelectorAll(".round-btn")
+    .forEach(b=>b.classList.remove("active"));
+
+  button.classList.add("active");
+
+  const container =
+    document.getElementById("matches");
+
+  container.innerHTML = "";
+
+  fixtures[round].forEach((match,index)=>{
+
+    const card =
+      document.createElement("div");
+
+    card.className = "match-card";
+
+    card.innerHTML = `
+
+      <div class="match-round">
+        AVL • ROUND ${round}
+      </div>
+
+      <div class="teams">
+        <span>${match[0]}</span>
+        <span class="vs">VS</span>
+        <span>${match[1]}</span>
+      </div>
+
+      <button class="buy">
+        BUY A TICKET
+      </button>
+    `;
+
+    card.querySelector(".buy")
+      .onclick = () =>
+        openBuy(match);
+
+    container.appendChild(card);
+
+  });
+
+  document.getElementById("stepText")
+    .textContent = "SELECT A MATCH";
+
+  window.scrollTo({
+    top:document.getElementById("matches").offsetTop-100,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================
+   OPEN BUY
+========================= */
+
+function openBuy(match){
+
+  selectedMatch = match;
+
+  document.getElementById("roundSection")
+    .classList.add("hidden");
+
+  document.getElementById("buySection")
+    .classList.remove("hidden");
+
+  document.getElementById("selectedMatchTitle")
+    .textContent =
+    match[0] + " VS " + match[1];
+
+  document.getElementById("selectedRound")
+    .textContent =
+    "ROUND " + selectedRound;
+
+  document.getElementById("stepText")
+    .textContent = "SELECT YOUR SEAT";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+function backToMatches(){
+
+  document.getElementById("buySection")
+    .classList.add("hidden");
+
+  document.getElementById("roundSection")
+    .classList.remove("hidden");
+
+  document.getElementById("stepText")
+    .textContent = "SELECT A MATCH";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================
+   CONFIRM
+========================= */
+
+function confirmTicket(){
+
+  const seat =
+    document.querySelector(
+      'input[name="seat"]:checked'
+    );
+
+  if(!seat){
+
+    showToast("Please select your seat.");
+    return;
+  }
+
+  const seatName =
+    seat.value;
+
+  const price =
+    seat.dataset.price;
+
+
+  document.getElementById("buySection")
+    .classList.add("hidden");
+
+  document.getElementById("ticketSection")
+    .classList.remove("hidden");
+
+
+  /* Ticket information */
+
+  document.getElementById("ticketMatch")
+    .textContent =
+    selectedMatch[0] +
+    " VS " +
+    selectedMatch[1];
+
+  document.getElementById("ticketRound")
+    .textContent =
+    "ROUND " + selectedRound +
+    " • AVL SEASON 1";
+
+
+  document.getElementById("ticketDiscord")
+    .textContent =
+    userData.discord;
+
+  document.getElementById("ticketRoblox")
+    .textContent =
+    userData.roblox;
+
+  document.getElementById("ticketRank")
+    .textContent =
+    userData.rank;
+
+  document.getElementById("ticketFavorite")
+    .textContent =
+    userData.favorite;
+
+  document.getElementById("ticketSeat")
+    .textContent =
+    seatName;
+
+  document.getElementById("ticketPrice")
+    .textContent =
+    price + " ROBUX";
+
+
+  /* Ticket ID */
+
+  const ticketID =
+    "AVL-S1-" +
+    Date.now().toString(36).toUpperCase() +
+    "-" +
+    Math.floor(1000 + Math.random()*9000);
+
+  document.getElementById("ticketId")
+    .textContent =
+    ticketID;
+
+
+  /* QR */
+
+  const qr =
+    document.getElementById("qrcode");
+
+  qr.innerHTML = "";
+
+  new QRCode(qr,{
+    text:JSON.stringify({
+      ticket:ticketID,
+      league:"AVL",
+      season:"S1",
+      round:selectedRound,
+      match:
+        selectedMatch[0] +
+        " VS " +
+        selectedMatch[1],
+      discord:userData.discord,
+      roblox:userData.roblox,
+      seat:seatName,
+      price:price + " ROBUX"
+    }),
+    width:134,
+    height:134,
+    colorDark:"#101820",
+    colorLight:"#ffffff",
+    correctLevel:QRCode.CorrectLevel.H
+  });
+
+
+  document.getElementById("stepText")
+    .textContent = "TICKET CREATED";
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },2500);
+}
+
+
+/* =========================
+   RESTART
+========================= */
+
+function restart(){
+
+  location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
