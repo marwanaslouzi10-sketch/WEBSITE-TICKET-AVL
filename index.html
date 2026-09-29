@@ -10,10 +10,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
+<!-- QR CODE -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- BARCODE -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
 
 <style>
+
+/* =====================================================
+   RESET
+===================================================== */
 
 *{
     margin:0;
@@ -25,7 +32,7 @@
     --gold:#f4c542;
     --gold-light:#ffe58a;
     --blue:#06182f;
-    --blue2:#0c2e58;
+    --blue2:#0b2e58;
     --blue3:#123f76;
     --black:#020812;
     --white:#ffffff;
@@ -39,33 +46,54 @@ html{
 
 body{
     min-height:100vh;
-    font-family:"Cairo",sans-serif;
+    font-family:"Cairo",Arial,sans-serif;
     color:white;
+
     background:
-        radial-gradient(circle at 50% -10%,#174d87 0%,transparent 35%),
-        radial-gradient(circle at 0% 100%,#102c52 0%,transparent 30%),
+        radial-gradient(
+            circle at 50% -10%,
+            #174d87 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            #102c52 0%,
+            transparent 30%
+        ),
         #020812;
+
     overflow-x:hidden;
 }
 
-/* GRID BACKGROUND */
+/* Background grid */
 
 body::before{
     content:"";
     position:fixed;
     inset:0;
-    pointer-events:none;
-    opacity:.3;
+
     background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
     background-size:50px 50px;
+
+    pointer-events:none;
 }
 
-/* GENERAL */
+/* =====================================================
+   GENERAL
+===================================================== */
 
 .hidden{
-    display:none!important;
+    display:none !important;
 }
 
 .container{
@@ -83,16 +111,19 @@ button{
     cursor:pointer;
 }
 
-/* =========================
+/* =====================================================
    INTRO
-========================= */
+===================================================== */
 
 #intro{
     min-height:100vh;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     text-align:center;
+
     position:relative;
 }
 
@@ -100,69 +131,108 @@ button{
     width:min(850px,92%);
     position:relative;
     z-index:2;
+
+    animation:fadeIn 1s ease;
 }
+
+/* AVL LOGO */
 
 .logo-orb{
     width:170px;
     height:170px;
+
     margin:auto;
+
     border-radius:50%;
+
     border:2px solid rgba(244,197,66,.8);
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     position:relative;
+
     background:
-        radial-gradient(circle,#16447a,#041225 70%);
+        radial-gradient(
+            circle,
+            #16447a,
+            #041225 70%
+        );
+
     box-shadow:
         0 0 35px rgba(244,197,66,.25),
         inset 0 0 35px rgba(244,197,66,.15);
+
     animation:float 3s ease-in-out infinite;
 }
 
 .logo-orb::before{
     content:"";
+
     position:absolute;
+
     inset:10px;
+
     border:1px dashed rgba(244,197,66,.7);
+
     border-radius:50%;
+
     animation:spin 15s linear infinite;
 }
 
 .logo-orb span{
     font-size:48px;
     font-weight:900;
+
     color:var(--gold);
+
     letter-spacing:-4px;
 }
 
+/* TITLE */
+
 .intro-title{
     margin-top:25px;
+
     font-size:clamp(42px,9vw,80px);
+
     font-weight:900;
+
     letter-spacing:5px;
-    background:linear-gradient(
-        90deg,
-        #fff,
-        var(--gold-light),
-        #fff
-    );
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            var(--gold-light),
+            #fff
+        );
+
     background-size:200%;
+
     -webkit-background-clip:text;
+
     color:transparent;
+
     animation:shine 3s linear infinite;
 }
 
 .intro-league{
-    font-size:clamp(12px,2vw,18px);
+    font-size:clamp(11px,2vw,18px);
+
     letter-spacing:5px;
+
     color:#b7c6d9;
 }
 
 .intro-message{
     max-width:680px;
+
     margin:30px auto;
+
     color:#dce5f1;
+
     line-height:2;
 }
 
@@ -170,101 +240,149 @@ button{
     color:var(--gold-light);
 }
 
+/* GET TICKET */
+
 .get-ticket{
+    position:relative;
+    z-index:10;
+
     border:0;
+
     border-radius:12px;
+
     padding:17px 60px;
+
     font-size:18px;
+
     font-weight:900;
+
     color:#061426;
-    background:linear-gradient(
-        135deg,
-        var(--gold),
-        var(--gold-light)
-    );
-    box-shadow:0 0 35px rgba(244,197,66,.25);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--gold-light)
+        );
+
+    box-shadow:
+        0 0 35px rgba(244,197,66,.25);
+
     transition:.3s;
 }
 
 .get-ticket:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 45px rgba(244,197,66,.35);
+    transform:translateY(-5px) scale(1.02);
+
+    box-shadow:
+        0 15px 45px rgba(244,197,66,.35);
 }
 
-/* =========================
+.get-ticket:active{
+    transform:scale(.97);
+}
+
+/* =====================================================
    HEADER
-========================= */
+===================================================== */
 
 .header{
     position:sticky;
     top:0;
     z-index:50;
+
     background:rgba(2,8,18,.82);
+
     backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.08);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
 }
 
 .header-inner{
     min-height:75px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 }
 
 .brand{
     color:var(--gold);
+
     font-weight:900;
+
     font-size:24px;
 }
 
 .brand small{
     display:block;
+
     font-size:8px;
+
     letter-spacing:2px;
+
     color:#aebed2;
 }
 
 .progress{
     font-size:12px;
+
     color:#aebed2;
 }
 
-/* =========================
+/* =====================================================
    SECTIONS
-========================= */
+===================================================== */
 
 .section{
     padding:55px 0 80px;
+
     animation:slideUp .5s ease;
 }
 
 .title{
     text-align:center;
+
     margin-bottom:35px;
 }
 
 .title h1{
     font-size:clamp(28px,5vw,45px);
+
     font-weight:900;
 }
 
 .title p{
     color:var(--muted);
+
     margin-top:5px;
 }
 
-/* =========================
+/* =====================================================
    FORM
-========================= */
+===================================================== */
 
 .form{
     max-width:700px;
+
     margin:auto;
+
     padding:30px;
+
     border-radius:22px;
-    background:rgba(8,28,53,.76);
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 25px 80px rgba(0,0,0,.3);
+
+    background:
+        rgba(8,28,53,.76);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.3);
+
     backdrop-filter:blur(15px);
 }
 
@@ -274,726 +392,1129 @@ button{
 
 .field label{
     display:block;
+
     margin-bottom:8px;
+
     font-size:12px;
+
     font-weight:800;
+
     color:#d6e0ec;
 }
 
 .field input,
 .field select{
+
     width:100%;
+
     height:52px;
+
     padding:0 15px;
+
     color:white;
+
     background:#05162b;
-    border:1px solid rgba(255,255,255,.1);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
     border-radius:10px;
+
     outline:none;
 }
 
 .field input:focus,
 .field select:focus{
+
     border-color:var(--gold);
-    box-shadow:0 0 0 3px rgba(244,197,66,.08);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(244,197,66,.08);
 }
 
 .primary{
+
     width:100%;
+
     height:54px;
+
     border:0;
+
     border-radius:10px;
-    background:linear-gradient(135deg,var(--gold),var(--gold-light));
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--gold-light)
+        );
+
     color:#061426;
+
     font-size:16px;
+
     font-weight:900;
+
+    transition:.25s;
 }
 
-/* =========================
+.primary:hover{
+    transform:translateY(-2px);
+}
+
+/* =====================================================
    ROUNDS
-========================= */
+===================================================== */
 
 .rounds{
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+        repeat(4,1fr);
+
     gap:15px;
+
     margin-bottom:35px;
 }
 
 .round{
+
     min-height:85px;
-    border:1px solid rgba(244,197,66,.2);
+
+    border:
+        1px solid
+        rgba(244,197,66,.2);
+
     border-radius:16px;
+
     color:white;
-    background:linear-gradient(145deg,#0c315e,#06172e);
+
+    background:
+        linear-gradient(
+            145deg,
+            #0c315e,
+            #06172e
+        );
+
     font-weight:900;
+
     transition:.3s;
 }
 
 .round:hover,
 .round.active{
+
     border-color:var(--gold);
+
     transform:translateY(-4px);
-    box-shadow:0 10px 35px rgba(244,197,66,.13);
+
+    box-shadow:
+        0 10px 35px
+        rgba(244,197,66,.13);
 }
 
+/* =====================================================
+   MATCHES
+===================================================== */
+
 .matches{
+
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+
+    grid-template-columns:
+        repeat(2,1fr);
+
     gap:18px;
 }
 
 .match{
+
     position:relative;
+
     padding:25px;
+
     border-radius:20px;
-    background:linear-gradient(145deg,#0d315d,#041426);
-    border:1px solid rgba(255,255,255,.09);
+
+    background:
+        linear-gradient(
+            145deg,
+            #0d315d,
+            #041426
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
     overflow:hidden;
+
     transition:.3s;
 }
 
 .match:hover{
+
     transform:translateY(-5px);
-    border-color:rgba(244,197,66,.5);
+
+    border-color:
+        rgba(244,197,66,.5);
 }
 
 .match::after{
+
     content:"AVL";
+
     position:absolute;
+
     right:-20px;
+
     top:-35px;
+
     font-size:100px;
+
     font-weight:900;
-    color:rgba(255,255,255,.025);
+
+    color:
+        rgba(255,255,255,.025);
 }
 
 .match-round{
+
     color:var(--gold);
+
     font-size:11px;
+
     font-weight:900;
 }
 
 .teams{
+
     margin:18px 0;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     gap:14px;
+
     direction:ltr;
+
     font-size:21px;
+
     font-weight:900;
+
+    position:relative;
+
+    z-index:2;
 }
 
 .vs{
+
     color:var(--gold);
+
     font-size:12px;
 }
 
 .buy{
+
     width:100%;
+
     height:44px;
-    border:1px solid rgba(244,197,66,.5);
+
+    border:
+        1px solid
+        rgba(244,197,66,.5);
+
     border-radius:9px;
-    background:rgba(244,197,66,.08);
+
+    background:
+        rgba(244,197,66,.08);
+
     color:var(--gold-light);
+
     font-weight:900;
+
     transition:.25s;
+
+    position:relative;
+
+    z-index:3;
 }
 
 .buy:hover{
+
     color:#061426;
+
     background:var(--gold);
 }
 
-/* =========================
-   BUY
-========================= */
+/* =====================================================
+   BUY TICKET
+===================================================== */
 
 .back{
+
     border:0;
+
     background:none;
+
     color:#aebed2;
+
     margin-bottom:20px;
+
     font-weight:700;
 }
 
 .buy-title{
+
     text-align:center;
+
     font-size:32px;
+
     font-weight:900;
+
     margin-bottom:25px;
+
     direction:ltr;
 }
 
 .info-grid{
+
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+
+    grid-template-columns:
+        repeat(2,1fr);
+
     gap:12px;
 }
 
 .info{
+
     padding:16px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.06);
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
     border-radius:12px;
 }
 
 .info span{
+
     display:block;
+
     color:#879ab2;
+
     font-size:10px;
 }
 
 .info strong{
+
     display:block;
+
     margin-top:3px;
 }
 
 .seat-title{
+
     margin:25px 0 12px;
 }
 
 .seats{
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:15px;
+
+    margin-bottom:25px;
 }
 
 .seat input{
+
     display:none;
 }
 
 .seat label{
+
     display:block;
+
     text-align:center;
+
     padding:24px 10px;
+
     border-radius:15px;
-    border:1px solid rgba(255,255,255,.1);
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
     background:#06182e;
+
     cursor:pointer;
+
     transition:.25s;
 }
 
 .seat label strong{
+
     display:block;
+
     font-size:19px;
 }
 
 .seat label span{
+
     color:var(--gold);
+
     font-size:13px;
+
     font-weight:900;
 }
 
 .seat input:checked + label{
+
     border-color:var(--gold);
-    background:rgba(244,197,66,.1);
-    box-shadow:0 0 25px rgba(244,197,66,.12);
+
+    background:
+        rgba(244,197,66,.1);
+
+    box-shadow:
+        0 0 25px
+        rgba(244,197,66,.12);
+
     transform:translateY(-3px);
 }
 
-/* =========================
+/* =====================================================
    PREMIUM TICKET
-========================= */
+===================================================== */
 
 .ticket-page{
+
     padding:45px 0 80px;
 }
 
 .ticket-shell{
+
     width:min(850px,96%);
+
     margin:auto;
-    filter:drop-shadow(0 30px 60px rgba(0,0,0,.5));
+
+    filter:
+        drop-shadow(
+            0 30px 60px
+            rgba(0,0,0,.5)
+        );
 }
 
-/* Main ticket */
-
 .ticket{
+
     position:relative;
+
     display:grid;
-    grid-template-columns:1fr 225px;
-    min-height:400px;
+
+    grid-template-columns:
+        1fr 225px;
+
+    min-height:440px;
+
     border-radius:18px;
+
     overflow:hidden;
+
     background:#f8f5eb;
+
     color:#101820;
 }
 
-/* LEFT SIDE */
+/* MAIN TICKET */
 
 .ticket-main{
+
     position:relative;
+
     padding:28px 32px;
+
     background:
-        radial-gradient(circle at 10% 10%,rgba(244,197,66,.13),transparent 30%),
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(244,197,66,.13),
+            transparent 30%
+        ),
         #f8f5eb;
 }
 
-/* security pattern */
-
 .ticket-main::before{
-    content:"AVL • AVL • AVL • AVL • AVL • AVL";
+
+    content:
+        "AVL • AVL • AVL • AVL • AVL • AVL";
+
     position:absolute;
+
     left:0;
+
     right:0;
+
     top:50%;
+
     transform:rotate(-12deg);
+
     font-size:35px;
+
     font-weight:900;
-    color:rgba(6,24,47,.035);
+
+    color:
+        rgba(6,24,47,.035);
+
     white-space:nowrap;
+
     pointer-events:none;
 }
 
-/* HEADER */
+/* Ticket Header */
 
 .ticket-header{
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
-    border-bottom:1px solid #d7d1c2;
+
+    border-bottom:
+        1px solid #d7d1c2;
+
     padding-bottom:15px;
+
+    position:relative;
+
+    z-index:2;
 }
 
 .ticket-logo{
+
     font-size:32px;
+
     font-weight:900;
+
     color:#0a2d55;
 }
 
 .ticket-logo small{
+
     display:block;
+
     color:#7d8790;
+
     font-size:8px;
+
     letter-spacing:2px;
 }
 
 .ticket-official{
+
     text-align:right;
+
     font-size:9px;
+
     color:#68717b;
+
     font-weight:800;
 }
 
-/* MATCH */
+/* Match */
 
 .ticket-match-area{
+
     padding:28px 0;
+
     text-align:center;
+
     position:relative;
+
     z-index:2;
 }
 
 .ticket-round-label{
+
     display:inline-block;
+
     padding:5px 14px;
+
     border-radius:20px;
+
     background:#0a2d55;
+
     color:#fff;
+
     font-size:10px;
+
     font-weight:900;
+
     letter-spacing:1px;
 }
 
 .ticket-match-name{
+
     margin-top:15px;
-    font-size:clamp(28px,5vw,45px);
+
+    font-size:
+        clamp(28px,5vw,45px);
+
     font-weight:900;
+
     color:#091f39;
+
     direction:ltr;
 }
 
 .ticket-vs{
+
     color:#c29218;
+
     font-size:13px;
+
     margin:4px 0;
+
     font-weight:900;
 }
 
-/* DETAILS */
+/* Ticket details */
 
 .ticket-details{
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:12px;
+
     position:relative;
+
     z-index:2;
 }
 
 .ticket-detail{
+
     padding:11px;
-    border:1px solid #ddd7ca;
-    background:rgba(255,255,255,.55);
+
+    border:
+        1px solid #ddd7ca;
+
+    background:
+        rgba(255,255,255,.55);
 }
 
 .ticket-detail span{
+
     display:block;
+
     font-size:8px;
+
     color:#7d858c;
+
     font-weight:900;
-    text-transform:uppercase;
 }
 
 .ticket-detail strong{
+
     display:block;
+
     margin-top:2px;
+
     font-size:12px;
 }
 
-/* USER */
+/* User data */
 
 .ticket-user{
+
     margin-top:18px;
+
     padding-top:15px;
-    border-top:1px dashed #c9c1b1;
+
+    border-top:
+        1px dashed #c9c1b1;
+
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+
+    grid-template-columns:
+        repeat(2,1fr);
+
     gap:8px 20px;
+
     position:relative;
+
     z-index:2;
 }
 
 .user-item{
+
     display:flex;
+
     gap:5px;
+
     font-size:10px;
 }
 
 .user-item span{
+
     color:#7d858c;
 }
 
-/* RIGHT STUB */
+/* =====================================================
+   TICKET STUB
+===================================================== */
 
 .ticket-stub{
+
     position:relative;
+
     padding:25px 18px;
+
     background:
         linear-gradient(
             145deg,
             #071d38,
             #0c396c
         );
+
     color:white;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
+
     justify-content:space-between;
+
     text-align:center;
 }
 
-/* perforation */
+/* Perforation */
 
 .ticket-stub::before{
+
     content:"";
+
     position:absolute;
+
     left:-1px;
+
     top:0;
+
     bottom:0;
-    border-left:2px dashed #d0c9b9;
-}
 
-/* circles */
-
-.ticket-stub::after{
-    content:"";
-    position:absolute;
-    left:-10px;
-    top:50%;
-    transform:translateY(-50%);
-    width:18px;
-    height:40px;
-    background:#020812;
-    border-radius:0 20px 20px 0;
+    border-left:
+        2px dashed
+        #d0c9b9;
 }
 
 .stub-title{
+
     font-size:13px;
+
     font-weight:900;
+
     letter-spacing:2px;
+
     color:var(--gold-light);
 }
 
 .stub-seat{
+
     margin-top:10px;
 }
 
 .stub-seat span{
+
     display:block;
+
     color:#9db0c7;
+
     font-size:9px;
 }
 
 .stub-seat strong{
+
     font-size:34px;
+
     color:white;
 }
 
 .stub-price{
+
     color:var(--gold-light);
+
     font-weight:900;
+
     font-size:15px;
 }
 
 /* QR */
 
 .qr-container{
+
     padding:8px;
+
     background:white;
+
     border-radius:5px;
 }
 
 #qrcode{
+
     width:135px;
+
     height:135px;
 }
 
 .stub-id{
+
     font-size:8px;
+
     color:#aebdd0;
+
     word-break:break-all;
 }
 
-/* BARCODE */
-
-.barcode-area{
-    position:absolute;
-    bottom:14px;
-    left:32px;
-    right:32px;
-    height:45px;
-    display:flex;
-    align-items:end;
-    justify-content:space-between;
-    z-index:3;
-}
-
-.barcode{
-    width:190px;
-    height:40px;
-}
-
-.barcode-text{
-    font-size:8px;
-    color:#6e747a;
-}
-
-/* NOTICE */
+/* Notice */
 
 .ticket-notice{
+
     margin-top:18px;
+
     padding:13px;
+
     background:#ebe7dc;
-    border-left:4px solid #c7981d;
+
+    border-left:
+        4px solid #c7981d;
+
     font-size:9px;
+
     line-height:1.8;
+
     color:#5d625f;
+
     position:relative;
+
     z-index:3;
 }
 
 .ticket-notice strong{
+
     color:#122a45;
 }
 
-/* ACTIONS */
+/* Barcode */
+
+.barcode-area{
+
+    margin-top:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    position:relative;
+
+    z-index:3;
+}
+
+.barcode{
+
+    width:190px;
+
+    height:42px;
+}
+
+.barcode-text{
+
+    font-size:8px;
+
+    color:#6e747a;
+}
+
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
 
 .ticket-actions{
+
     width:min(850px,96%);
+
     margin:20px auto 0;
+
     display:flex;
+
     gap:10px;
 }
 
 .ticket-actions button{
+
     flex:1;
+
     height:50px;
+
     border:0;
+
     border-radius:10px;
+
     font-weight:900;
 }
 
 .print{
+
     background:var(--gold);
+
     color:#061426;
 }
 
 .home{
+
     background:#0d2d53;
+
     color:white;
 }
 
-/* TOAST */
+/* =====================================================
+   TOAST
+===================================================== */
 
 .toast{
+
     position:fixed;
+
     bottom:25px;
+
     left:50%;
-    transform:translate(-50%,30px);
+
+    transform:
+        translate(-50%,30px);
+
     background:#0c2e58;
-    border:1px solid rgba(244,197,66,.5);
+
+    border:
+        1px solid
+        rgba(244,197,66,.5);
+
     padding:13px 20px;
+
     border-radius:10px;
+
     opacity:0;
+
     pointer-events:none;
+
     transition:.3s;
+
     z-index:100;
 }
 
 .toast.show{
+
     opacity:1;
-    transform:translate(-50%,0);
+
+    transform:
+        translate(-50%,0);
 }
 
-/* =========================
-   PRINT
-========================= */
-
-@media print{
-
-    body{
-        background:white!important;
-    }
-
-    body::before,
-    .header,
-    .title,
-    .ticket-actions{
-        display:none!important;
-    }
-
-    #ticketSection{
-        display:block!important;
-        padding:0!important;
-    }
-
-    .ticket-shell{
-        width:100%;
-        filter:none;
-    }
-
-    .ticket{
-        box-shadow:none;
-    }
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:750px){
-
-    .rounds{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .matches{
-        grid-template-columns:1fr;
-    }
-
-    .seats{
-        grid-template-columns:1fr;
-    }
-
-    .info-grid{
-        grid-template-columns:1fr;
-    }
-
-    .ticket{
-        grid-template-columns:1fr;
-    }
-
-    .ticket-stub{
-        min-height:300px;
-        order:-1;
-    }
-
-    .ticket-stub::before{
-        left:0;
-        right:0;
-        top:auto;
-        bottom:-1px;
-        border-left:0;
-        border-top:2px dashed #d0c9b9;
-    }
-
-    .ticket-stub::after{
-        display:none;
-    }
-
-    .ticket-details{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .ticket-user{
-        grid-template-columns:1fr;
-    }
-
-    .barcode-area{
-        position:relative;
-        left:auto;
-        right:auto;
-        bottom:auto;
-        margin-top:15px;
-    }
-
-    .ticket-notice{
-        margin-bottom:10px;
-    }
-
-    .ticket-actions{
-        flex-direction:column;
-    }
-}
-
-/* =========================
+/* =====================================================
    ANIMATIONS
-========================= */
+===================================================== */
 
-@keyframes float{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-10px);
-    }
-}
+@keyframes fadeIn{
 
-@keyframes spin{
+    from{
+        opacity:0;
+    }
+
     to{
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes shine{
-    0%{
-        background-position:0%;
-    }
-    100%{
-        background-position:200%;
+        opacity:1;
     }
 }
 
 @keyframes slideUp{
+
     from{
         opacity:0;
         transform:translateY(20px);
     }
+
     to{
         opacity:1;
         transform:translateY(0);
     }
 }
 
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes shine{
+
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:200%;
+    }
+}
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print{
+
+    body{
+        background:white !important;
+    }
+
+    body::before{
+        display:none;
+    }
+
+    .header,
+    .title,
+    .ticket-actions{
+        display:none !important;
+    }
+
+    #ticketSection{
+        display:block !important;
+
+        padding:0 !important;
+    }
+
+    .ticket-shell{
+
+        width:100%;
+
+        filter:none;
+    }
+
+    .ticket{
+
+        box-shadow:none;
+    }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:750px){
+
+    .rounds{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .matches{
+
+        grid-template-columns:1fr;
+    }
+
+    .seats{
+
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .ticket{
+
+        grid-template-columns:1fr;
+    }
+
+    .ticket-stub{
+
+        min-height:310px;
+
+        order:-1;
+    }
+
+    .ticket-stub::before{
+
+        left:0;
+
+        right:0;
+
+        top:auto;
+
+        bottom:-1px;
+
+        border-left:0;
+
+        border-top:
+            2px dashed
+            #d0c9b9;
+    }
+
+    .ticket-details{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .ticket-user{
+
+        grid-template-columns:1fr;
+    }
+
+    .ticket-actions{
+
+        flex-direction:column;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- =========================
+
+<!-- =====================================================
      INTRO
-========================= -->
+===================================================== -->
 
 <section id="intro">
 
@@ -1024,9 +1545,15 @@ button{
 
         </p>
 
+        <!-- IMPORTANT:
+             No inline onclick here.
+             JavaScript connects the button safely.
+        -->
+
         <button
+            type="button"
             class="get-ticket"
-            onclick="startApp()"
+            id="getTicketBtn"
         >
             GET TICKET
         </button>
@@ -1036,314 +1563,15 @@ button{
 </section>
 
 
-<!-- =========================
-     APP
-========================= -->
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
 
 <main id="app" class="hidden">
 
+
+<!-- HEADER -->
+
 <header class="header">
 
-    <div class="container header-inner">
-
-        <div class="brand">
-            AVL
-            <small>
-                ARABIC VIRTUAL LEAGUE
-            </small>
-        </div>
-
-        <div
-            class="progress"
-            id="progress"
-        >
-            PLAYER INFORMATION
-        </div>
-
-    </div>
-
-</header>
-
-
-<!-- =========================
-     USER INFORMATION
-========================= -->
-
-<section
-    id="userSection"
-    class="section"
->
-
-<div class="container">
-
-<div class="title">
-
-    <h1>
-        Player Information
-    </h1>
-
-    <p>
-        أدخل معلوماتك قبل اختيار التذكرة
-    </p>
-
-</div>
-
-
-<div class="form">
-
-<div class="field">
-
-<label>
-USER DISCORD
-</label>
-
-<input
-    id="discord"
-    type="text"
-    placeholder="Discord username"
-/>
-
-</div>
-
-
-<div class="field">
-
-<label>
-USER ROBLOX
-</label>
-
-<input
-    id="roblox"
-    type="text"
-    placeholder="Roblox username"
-/>
-
-</div>
-
-
-<div class="field">
-
-<label>
-YOUR RANKS IN AVL
-</label>
-
-<select id="rank">
-
-<option value="">
-Select your rank
-</option>
-
-<option>
-Player
-</option>
-
-<option>
-Captain
-</option>
-
-<option>
-Manager
-</option>
-
-<option>
-Owner
-</option>
-
-<option>
-Referee
-</option>
-
-<option>
-Staff
-</option>
-
-<option>
-Fan
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>
-WHAT'S YOUR FAVOURITE TEAM
-</label>
-
-<select id="favorite">
-
-<option value="">
-Select your favourite team
-</option>
-
-<option>KAC</option>
-<option>KACM</option>
-<option>WAC</option>
-<option>CRB</option>
-<option>JSK</option>
-<option>RCA</option>
-<option>MAS</option>
-<option>IRT</option>
-
-</select>
-
-</div>
-
-
-<button
-    class="primary"
-    onclick="saveUser()"
->
-    CONTINUE →
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     ROUNDS
-========================= -->
-
-<section
-    id="roundSection"
-    class="section hidden"
->
-
-<div class="container">
-
-<div class="title">
-
-<h1>
-AVL FIXTURE S1
-</h1>
-
-<p>
-Choose a round
-</p>
-
-</div>
-
-
-<div
-    id="rounds"
-    class="rounds"
-></div>
-
-
-<div
-    id="matches"
-    class="matches"
-></div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     BUY TICKET
-========================= -->
-
-<section
-    id="buySection"
-    class="section hidden"
->
-
-<div class="container">
-
-<div class="form">
-
-<button
-    class="back"
-    onclick="backToMatches()"
->
-← BACK TO MATCHES
-</button>
-
-
-<div
-    id="buyTitle"
-    class="buy-title"
->
-</div>
-
-
-<div class="info-grid">
-
-<div class="info">
-
-<span>
-STADIUM
-</span>
-
-<strong>
-N/A
-</strong>
-
-</div>
-
-
-<div class="info">
-
-<span>
-TIME
-</span>
-
-<strong>
-N/A
-</strong>
-
-</div>
-
-
-<div class="info">
-
-<span>
-ROUND
-</span>
-
-<strong id="buyRound">
-</strong>
-
-</div>
-
-
-<div class="info">
-
-<span>
-STATUS
-</span>
-
-<strong style="color:var(--green)">
-TICKETS AVAILABLE
-</strong>
-
-</div>
-
-</div>
-
-
-<h3 class="seat-title">
-PLACE OF SEAT
-</h3>
-
-
-<div class="seats">
-
-<div class="seat">
-
-<input
-    type="radio"
-    name="seat"
-    id="sud"
-    value="SUD"
-    data-price="10"
->
-
-<label for="sud"
+   
