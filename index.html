@@ -3,41 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AVL | Official Ticketing</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- QR CODE -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<!-- BARCODE -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
-
 <style>
-
-/* =====================================================
-   RESET
-===================================================== */
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-:root{
-    --gold:#f4c542;
-    --gold-light:#ffe58a;
-    --blue:#06182f;
-    --blue2:#0b2e58;
-    --blue3:#123f76;
-    --black:#020812;
-    --white:#ffffff;
-    --muted:#9eafc6;
-    --green:#35df91;
 }
 
 html{
@@ -45,75 +17,58 @@ html{
 }
 
 body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#020814;
+    color:#fff;
     min-height:100vh;
-    font-family:"Cairo",Arial,sans-serif;
-    color:white;
-
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            #174d87 0%,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 0% 100%,
-            #102c52 0%,
-            transparent 30%
-        ),
-        #020812;
-
     overflow-x:hidden;
 }
 
-/* Background grid */
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        );
-
-    background-size:50px 50px;
-
-    pointer-events:none;
-}
-
-/* =====================================================
-   GENERAL
-===================================================== */
-
-.hidden{
-    display:none !important;
-}
-
-.container{
-    width:min(1100px,92%);
-    margin:auto;
-}
-
-button,
-input,
-select{
-    font-family:inherit;
+button,input,select{
+    font:inherit;
 }
 
 button{
     cursor:pointer;
 }
 
-/* =====================================================
+/* =========================
+   BACKGROUND
+========================= */
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+
+    background:
+        radial-gradient(circle at 50% 0%,#174b85 0%,transparent 38%),
+        radial-gradient(circle at 0% 100%,#0b315d 0%,transparent 35%),
+        #020814;
+}
+
+body:after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+
+    background-size:45px 45px;
+    pointer-events:none;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* =========================
    INTRO
-===================================================== */
+========================= */
 
 #intro{
     min-height:100vh;
@@ -124,28 +79,20 @@ button{
 
     text-align:center;
 
-    position:relative;
+    padding:30px;
 }
 
-.intro-content{
-    width:min(850px,92%);
-    position:relative;
-    z-index:2;
-
-    animation:fadeIn 1s ease;
+.intro-box{
+    width:min(850px,100%);
 }
 
-/* AVL LOGO */
+.logo{
+    width:160px;
+    height:160px;
 
-.logo-orb{
-    width:170px;
-    height:170px;
-
-    margin:auto;
+    margin:0 auto 25px;
 
     border-radius:50%;
-
-    border:2px solid rgba(244,197,66,.8);
 
     display:flex;
     align-items:center;
@@ -154,236 +101,194 @@ button{
     position:relative;
 
     background:
-        radial-gradient(
-            circle,
-            #16447a,
-            #041225 70%
-        );
+        radial-gradient(circle,#164f89,#031326 70%);
+
+    border:2px solid #f4c542;
 
     box-shadow:
-        0 0 35px rgba(244,197,66,.25),
+        0 0 25px rgba(244,197,66,.3),
         inset 0 0 35px rgba(244,197,66,.15);
 
     animation:float 3s ease-in-out infinite;
 }
 
-.logo-orb::before{
+.logo:before{
     content:"";
 
     position:absolute;
-
     inset:10px;
 
-    border:1px dashed rgba(244,197,66,.7);
-
+    border:1px dashed #f4c542;
     border-radius:50%;
 
-    animation:spin 15s linear infinite;
+    animation:spin 12s linear infinite;
 }
 
-.logo-orb span{
-    font-size:48px;
+.logo span{
+    font-size:45px;
     font-weight:900;
-
-    color:var(--gold);
-
-    letter-spacing:-4px;
+    color:#f4c542;
+    z-index:2;
 }
-
-/* TITLE */
 
 .intro-title{
-    margin-top:25px;
-
-    font-size:clamp(42px,9vw,80px);
-
+    font-size:clamp(55px,12vw,100px);
     font-weight:900;
+    letter-spacing:8px;
 
-    letter-spacing:5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #fff,
-            var(--gold-light),
-            #fff
-        );
+    background:linear-gradient(
+        90deg,
+        #fff,
+        #f4c542,
+        #fff
+    );
 
     background-size:200%;
 
     -webkit-background-clip:text;
-
     color:transparent;
 
     animation:shine 3s linear infinite;
 }
 
-.intro-league{
-    font-size:clamp(11px,2vw,18px);
-
-    letter-spacing:5px;
-
-    color:#b7c6d9;
+.subtitle{
+    color:#aebed2;
+    letter-spacing:4px;
+    font-size:14px;
 }
 
-.intro-message{
-    max-width:680px;
-
+.welcome{
     margin:30px auto;
+    max-width:700px;
 
-    color:#dce5f1;
-
+    color:#d9e2ee;
     line-height:2;
 }
 
-.intro-message b{
-    color:var(--gold-light);
+.welcome strong{
+    color:#f4c542;
 }
 
-/* GET TICKET */
-
 .get-ticket{
-    position:relative;
-    z-index:10;
-
     border:0;
+
+    padding:17px 65px;
 
     border-radius:12px;
 
-    padding:17px 60px;
-
-    font-size:18px;
-
-    font-weight:900;
+    background:linear-gradient(
+        135deg,
+        #f4c542,
+        #ffe58a
+    );
 
     color:#061426;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--gold),
-            var(--gold-light)
-        );
+    font-weight:900;
+    font-size:18px;
 
     box-shadow:
         0 0 35px rgba(244,197,66,.25);
 
-    transition:.3s;
+    transition:.25s;
 }
 
 .get-ticket:hover{
-    transform:translateY(-5px) scale(1.02);
+    transform:translateY(-4px) scale(1.03);
 
     box-shadow:
         0 15px 45px rgba(244,197,66,.35);
 }
 
-.get-ticket:active{
-    transform:scale(.97);
-}
-
-/* =====================================================
+/* =========================
    HEADER
-===================================================== */
+========================= */
 
-.header{
+header{
     position:sticky;
     top:0;
-    z-index:50;
+    z-index:100;
 
-    background:rgba(2,8,18,.82);
+    background:rgba(2,8,20,.9);
+    backdrop-filter:blur(15px);
 
-    backdrop-filter:blur(18px);
-
-    border-bottom:
-        1px solid rgba(255,255,255,.08);
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .header-inner{
-    min-height:75px;
+    width:min(1100px,92%);
+    margin:auto;
+
+    min-height:70px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 }
 
 .brand{
-    color:var(--gold);
-
+    color:#f4c542;
+    font-size:25px;
     font-weight:900;
-
-    font-size:24px;
 }
 
 .brand small{
     display:block;
 
+    color:#9eafc6;
     font-size:8px;
-
     letter-spacing:2px;
-
-    color:#aebed2;
 }
 
-.progress{
-    font-size:12px;
-
-    color:#aebed2;
+.status{
+    color:#9eafc6;
+    font-size:11px;
 }
 
-/* =====================================================
-   SECTIONS
-===================================================== */
+/* =========================
+   GENERAL
+========================= */
+
+.container{
+    width:min(1050px,92%);
+    margin:auto;
+}
 
 .section{
     padding:55px 0 80px;
-
-    animation:slideUp .5s ease;
 }
 
-.title{
+.section-title{
     text-align:center;
-
-    margin-bottom:35px;
+    margin-bottom:30px;
 }
 
-.title h1{
-    font-size:clamp(28px,5vw,45px);
-
-    font-weight:900;
+.section-title h1{
+    font-size:clamp(28px,6vw,45px);
 }
 
-.title p{
-    color:var(--muted);
-
-    margin-top:5px;
+.section-title p{
+    margin-top:7px;
+    color:#91a4bc;
 }
 
-/* =====================================================
+/* =========================
    FORM
-===================================================== */
+========================= */
 
-.form{
-    max-width:700px;
-
+.form-box{
+    width:min(700px,100%);
     margin:auto;
 
     padding:30px;
 
-    border-radius:22px;
+    background:rgba(7,28,54,.8);
 
-    background:
-        rgba(8,28,53,.76);
+    border:1px solid rgba(255,255,255,.1);
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border-radius:20px;
 
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.3);
-
-    backdrop-filter:blur(15px);
+    box-shadow:0 25px 70px rgba(0,0,0,.3);
 }
 
 .field{
@@ -395,369 +300,259 @@ button{
 
     margin-bottom:8px;
 
+    color:#d9e2ee;
+
     font-size:12px;
-
-    font-weight:800;
-
-    color:#d6e0ec;
+    font-weight:900;
 }
 
 .field input,
 .field select{
-
     width:100%;
-
     height:52px;
 
     padding:0 15px;
 
-    color:white;
-
-    background:#05162b;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
     border-radius:10px;
 
+    border:1px solid rgba(255,255,255,.1);
+
     outline:none;
+
+    background:#04162c;
+    color:#fff;
 }
 
 .field input:focus,
 .field select:focus{
-
-    border-color:var(--gold);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(244,197,66,.08);
+    border-color:#f4c542;
 }
 
-.primary{
-
+.continue{
     width:100%;
-
-    height:54px;
+    height:53px;
 
     border:0;
-
     border-radius:10px;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--gold),
-            var(--gold-light)
-        );
+    background:linear-gradient(
+        135deg,
+        #f4c542,
+        #ffe58a
+    );
 
     color:#061426;
 
-    font-size:16px;
+    font-weight:900;
+}
+
+/* =========================
+   ROUNDS
+========================= */
+
+.rounds{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:15px;
+
+    margin-bottom:30px;
+}
+
+.round{
+    min-height:80px;
+
+    border-radius:15px;
+
+    border:1px solid rgba(244,197,66,.25);
+
+    background:linear-gradient(
+        145deg,
+        #0c315d,
+        #05172e
+    );
+
+    color:#fff;
 
     font-weight:900;
 
     transition:.25s;
 }
 
-.primary:hover{
-    transform:translateY(-2px);
-}
-
-/* =====================================================
-   ROUNDS
-===================================================== */
-
-.rounds{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:15px;
-
-    margin-bottom:35px;
-}
-
-.round{
-
-    min-height:85px;
-
-    border:
-        1px solid
-        rgba(244,197,66,.2);
-
-    border-radius:16px;
-
-    color:white;
-
-    background:
-        linear-gradient(
-            145deg,
-            #0c315e,
-            #06172e
-        );
-
-    font-weight:900;
-
-    transition:.3s;
-}
-
 .round:hover,
 .round.active{
-
-    border-color:var(--gold);
+    border-color:#f4c542;
 
     transform:translateY(-4px);
 
     box-shadow:
-        0 10px 35px
-        rgba(244,197,66,.13);
+        0 10px 30px rgba(244,197,66,.12);
 }
 
-/* =====================================================
+/* =========================
    MATCHES
-===================================================== */
+========================= */
 
 .matches{
-
     display:grid;
 
-    grid-template-columns:
-        repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
 
     gap:18px;
 }
 
 .match{
-
-    position:relative;
-
     padding:25px;
 
-    border-radius:20px;
+    border-radius:18px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #0d315d,
-            #041426
-        );
+    background:linear-gradient(
+        145deg,
+        #0d315d,
+        #041426
+    );
 
-    border:
-        1px solid
-        rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.08);
 
-    overflow:hidden;
-
-    transition:.3s;
+    transition:.25s;
 }
 
 .match:hover{
-
     transform:translateY(-5px);
 
-    border-color:
-        rgba(244,197,66,.5);
+    border-color:#f4c542;
 }
 
-.match::after{
-
-    content:"AVL";
-
-    position:absolute;
-
-    right:-20px;
-
-    top:-35px;
-
-    font-size:100px;
-
-    font-weight:900;
-
-    color:
-        rgba(255,255,255,.025);
-}
-
-.match-round{
-
-    color:var(--gold);
-
+.round-label{
+    color:#f4c542;
     font-size:11px;
-
     font-weight:900;
 }
 
 .teams{
-
-    margin:18px 0;
-
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     gap:14px;
 
-    direction:ltr;
+    margin:20px 0;
 
-    font-size:21px;
-
+    font-size:22px;
     font-weight:900;
-
-    position:relative;
-
-    z-index:2;
 }
 
 .vs{
-
-    color:var(--gold);
-
+    color:#f4c542;
     font-size:12px;
 }
 
 .buy{
-
     width:100%;
-
-    height:44px;
-
-    border:
-        1px solid
-        rgba(244,197,66,.5);
+    height:45px;
 
     border-radius:9px;
 
-    background:
-        rgba(244,197,66,.08);
+    border:1px solid #f4c542;
 
-    color:var(--gold-light);
+    background:rgba(244,197,66,.08);
+
+    color:#ffe58a;
 
     font-weight:900;
-
-    transition:.25s;
-
-    position:relative;
-
-    z-index:3;
 }
 
 .buy:hover{
-
+    background:#f4c542;
     color:#061426;
-
-    background:var(--gold);
 }
 
-/* =====================================================
-   BUY TICKET
-===================================================== */
+/* =========================
+   BUY
+========================= */
 
 .back{
-
     border:0;
-
     background:none;
-
-    color:#aebed2;
+    color:#9eafc6;
 
     margin-bottom:20px;
-
-    font-weight:700;
 }
 
-.buy-title{
+.buy-box{
+    width:min(700px,100%);
+    margin:auto;
 
+    padding:30px;
+
+    border-radius:20px;
+
+    background:rgba(7,28,54,.85);
+
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.match-name{
     text-align:center;
 
     font-size:32px;
-
     font-weight:900;
 
     margin-bottom:25px;
-
-    direction:ltr;
 }
 
-.info-grid{
-
+.infos{
     display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
+    grid-template-columns:repeat(2,1fr);
     gap:12px;
 }
 
 .info{
+    padding:15px;
 
-    padding:16px;
+    background:rgba(255,255,255,.04);
 
-    background:
-        rgba(255,255,255,.04);
-
-    border:
-        1px solid
-        rgba(255,255,255,.06);
-
-    border-radius:12px;
+    border-radius:10px;
 }
 
-.info span{
-
+.info small{
     display:block;
-
     color:#879ab2;
-
-    font-size:10px;
 }
 
 .info strong{
-
     display:block;
-
-    margin-top:3px;
+    margin-top:4px;
 }
 
 .seat-title{
-
     margin:25px 0 12px;
 }
 
 .seats{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:15px;
-
-    margin-bottom:25px;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
 }
 
 .seat input{
-
     display:none;
 }
 
 .seat label{
-
     display:block;
 
     text-align:center;
 
-    padding:24px 10px;
+    padding:25px 10px;
 
-    border-radius:15px;
+    border-radius:14px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.1);
+    background:#06182f;
 
-    background:#06182e;
+    border:1px solid rgba(255,255,255,.1);
 
     cursor:pointer;
 
@@ -765,813 +560,1647 @@ button{
 }
 
 .seat label strong{
-
     display:block;
-
-    font-size:19px;
+    font-size:20px;
 }
 
 .seat label span{
-
-    color:var(--gold);
-
+    color:#f4c542;
     font-size:13px;
-
     font-weight:900;
 }
 
 .seat input:checked + label{
+    border-color:#f4c542;
 
-    border-color:var(--gold);
-
-    background:
-        rgba(244,197,66,.1);
-
-    box-shadow:
-        0 0 25px
-        rgba(244,197,66,.12);
+    background:rgba(244,197,66,.1);
 
     transform:translateY(-3px);
 }
 
-/* =====================================================
-   PREMIUM TICKET
-===================================================== */
+.confirm{
+    width:100%;
+    height:53px;
 
-.ticket-page{
+    margin-top:25px;
 
+    border:0;
+    border-radius:10px;
+
+    background:linear-gradient(
+        135deg,
+        #f4c542,
+        #ffe58a
+    );
+
+    color:#061426;
+
+    font-weight:900;
+}
+
+/* =========================
+   TICKET
+========================= */
+
+.ticket-area{
     padding:45px 0 80px;
 }
 
-.ticket-shell{
-
-    width:min(850px,96%);
-
-    margin:auto;
-
-    filter:
-        drop-shadow(
-            0 30px 60px
-            rgba(0,0,0,.5)
-        );
-}
-
 .ticket{
-
-    position:relative;
+    width:min(900px,95%);
+    margin:auto;
 
     display:grid;
 
-    grid-template-columns:
-        1fr 225px;
+    grid-template-columns:1fr 230px;
 
-    min-height:440px;
-
-    border-radius:18px;
+    min-height:450px;
 
     overflow:hidden;
 
+    border-radius:18px;
+
     background:#f8f5eb;
 
-    color:#101820;
-}
+    color:#111;
 
-/* MAIN TICKET */
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.5);
+}
 
 .ticket-main{
+    padding:30px;
 
     position:relative;
-
-    padding:28px 32px;
-
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(244,197,66,.13),
-            transparent 30%
-        ),
-        #f8f5eb;
 }
 
-.ticket-main::before{
-
-    content:
-        "AVL • AVL • AVL • AVL • AVL • AVL";
+.ticket-main:after{
+    content:"AVL • AVL • AVL • AVL";
 
     position:absolute;
 
-    left:0;
+    left:20px;
+    top:45%;
 
-    right:0;
-
-    top:50%;
-
-    transform:rotate(-12deg);
-
-    font-size:35px;
+    font-size:40px;
 
     font-weight:900;
 
-    color:
-        rgba(6,24,47,.035);
+    color:rgba(0,0,0,.025);
 
-    white-space:nowrap;
+    transform:rotate(-15deg);
 
     pointer-events:none;
 }
 
-/* Ticket Header */
-
 .ticket-header{
-
     display:flex;
-
-    align-items:center;
-
     justify-content:space-between;
 
-    border-bottom:
-        1px solid #d7d1c2;
+    border-bottom:1px solid #d7d1c2;
 
     padding-bottom:15px;
-
-    position:relative;
-
-    z-index:2;
 }
 
 .ticket-logo{
-
-    font-size:32px;
-
+    font-size:35px;
     font-weight:900;
-
-    color:#0a2d55;
+    color:#092d55;
 }
 
 .ticket-logo small{
-
     display:block;
-
-    color:#7d8790;
-
     font-size:8px;
-
+    color:#7d8790;
     letter-spacing:2px;
 }
 
-.ticket-official{
-
+.official{
     text-align:right;
-
+    color:#707982;
     font-size:9px;
-
-    color:#68717b;
-
-    font-weight:800;
+    font-weight:900;
 }
 
-/* Match */
-
-.ticket-match-area{
-
-    padding:28px 0;
-
+.ticket-match{
     text-align:center;
 
-    position:relative;
+    padding:30px 0;
 
+    position:relative;
     z-index:2;
 }
 
-.ticket-round-label{
-
+.ticket-round{
     display:inline-block;
 
-    padding:5px 14px;
-
-    border-radius:20px;
-
-    background:#0a2d55;
+    background:#092d55;
 
     color:#fff;
 
+    border-radius:20px;
+
+    padding:5px 15px;
+
     font-size:10px;
-
     font-weight:900;
-
-    letter-spacing:1px;
 }
 
-.ticket-match-name{
-
+.ticket-teams{
     margin-top:15px;
 
-    font-size:
-        clamp(28px,5vw,45px);
-
+    font-size:40px;
     font-weight:900;
 
     color:#091f39;
-
-    direction:ltr;
 }
 
-.ticket-vs{
-
-    color:#c29218;
-
-    font-size:13px;
-
-    margin:4px 0;
-
-    font-weight:900;
-}
-
-/* Ticket details */
-
-.ticket-details{
-
+.ticket-info{
     display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
 
-    gap:12px;
+    gap:10px;
 
     position:relative;
-
     z-index:2;
 }
 
-.ticket-detail{
+.ticket-info div{
+    padding:10px;
 
-    padding:11px;
+    border:1px solid #ddd7ca;
 
-    border:
-        1px solid #ddd7ca;
-
-    background:
-        rgba(255,255,255,.55);
+    background:#fff9;
 }
 
-.ticket-detail span{
-
+.ticket-info small{
     display:block;
-
-    font-size:8px;
-
     color:#7d858c;
-
-    font-weight:900;
+    font-size:8px;
 }
 
-.ticket-detail strong{
-
-    display:block;
-
-    margin-top:2px;
-
+.ticket-info strong{
     font-size:12px;
 }
 
-/* User data */
-
 .ticket-user{
-
-    margin-top:18px;
-
-    padding-top:15px;
-
-    border-top:
-        1px dashed #c9c1b1;
-
     display:grid;
 
-    grid-template-columns:
-        repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
 
     gap:8px 20px;
 
-    position:relative;
+    margin-top:20px;
 
+    padding-top:15px;
+
+    border-top:1px dashed #c9c1b1;
+
+    font-size:10px;
+
+    position:relative;
     z-index:2;
 }
 
-.user-item{
-
-    display:flex;
-
-    gap:5px;
-
-    font-size:10px;
-}
-
-.user-item span{
-
-    color:#7d858c;
-}
-
-/* =====================================================
-   TICKET STUB
-===================================================== */
-
-.ticket-stub{
-
-    position:relative;
-
-    padding:25px 18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #071d38,
-            #0c396c
-        );
-
-    color:white;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    text-align:center;
-}
-
-/* Perforation */
-
-.ticket-stub::before{
-
-    content:"";
-
-    position:absolute;
-
-    left:-1px;
-
-    top:0;
-
-    bottom:0;
-
-    border-left:
-        2px dashed
-        #d0c9b9;
-}
-
-.stub-title{
-
-    font-size:13px;
-
-    font-weight:900;
-
-    letter-spacing:2px;
-
-    color:var(--gold-light);
-}
-
-.stub-seat{
-
-    margin-top:10px;
-}
-
-.stub-seat span{
-
-    display:block;
-
-    color:#9db0c7;
-
-    font-size:9px;
-}
-
-.stub-seat strong{
-
-    font-size:34px;
-
-    color:white;
-}
-
-.stub-price{
-
-    color:var(--gold-light);
-
-    font-weight:900;
-
-    font-size:15px;
-}
-
-/* QR */
-
-.qr-container{
-
-    padding:8px;
-
-    background:white;
-
-    border-radius:5px;
-}
-
-#qrcode{
-
-    width:135px;
-
-    height:135px;
-}
-
-.stub-id{
-
-    font-size:8px;
-
-    color:#aebdd0;
-
-    word-break:break-all;
-}
-
-/* Notice */
-
-.ticket-notice{
-
+.notice{
     margin-top:18px;
 
     padding:13px;
 
     background:#ebe7dc;
 
-    border-left:
-        4px solid #c7981d;
+    border-left:4px solid #c7981d;
 
     font-size:9px;
 
     line-height:1.8;
 
-    color:#5d625f;
-
     position:relative;
-
-    z-index:3;
+    z-index:2;
 }
 
-.ticket-notice strong{
+.ticket-stub{
+    background:linear-gradient(
+        145deg,
+        #071d38,
+        #0c396c
+    );
 
-    color:#122a45;
-}
-
-/* Barcode */
-
-.barcode-area{
-
-    margin-top:15px;
+    color:#fff;
 
     display:flex;
-
-    align-items:center;
+    flex-direction:column;
 
     justify-content:space-between;
+    align-items:center;
 
-    gap:15px;
+    text-align:center;
 
-    position:relative;
+    padding:25px 18px;
 
-    z-index:3;
+    border-left:2px dashed #ddd;
 }
 
-.barcode{
-
-    width:190px;
-
-    height:42px;
+.stub-title{
+    color:#ffe58a;
+    font-weight:900;
+    letter-spacing:2px;
 }
 
-.barcode-text{
+.stub-seat small{
+    display:block;
+    color:#9db0c7;
+}
 
+.stub-seat strong{
+    display:block;
+
+    font-size:40px;
+}
+
+.stub-price{
+    color:#ffe58a;
+    font-weight:900;
+}
+
+.qr{
+    width:140px;
+    height:140px;
+
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #000 0 3px,
+            #fff 3px 6px
+        );
+
+    border:8px solid #fff;
+}
+
+.ticket-id{
+    color:#aebdd0;
     font-size:8px;
-
-    color:#6e747a;
+    word-break:break-all;
 }
 
-/* =====================================================
-   ACTION BUTTONS
-===================================================== */
-
-.ticket-actions{
-
-    width:min(850px,96%);
-
-    margin:20px auto 0;
+.actions{
+    width:min(900px,95%);
+    margin:20px auto;
 
     display:flex;
-
     gap:10px;
 }
 
-.ticket-actions button{
-
+.actions button{
     flex:1;
 
     height:50px;
 
     border:0;
-
     border-radius:10px;
 
     font-weight:900;
 }
 
 .print{
-
-    background:var(--gold);
-
+    background:#f4c542;
     color:#061426;
 }
 
 .home{
-
     background:#0d2d53;
-
-    color:white;
+    color:#fff;
 }
 
-/* =====================================================
+/* =========================
    TOAST
-===================================================== */
+========================= */
 
 .toast{
-
     position:fixed;
 
     bottom:25px;
-
     left:50%;
 
-    transform:
-        translate(-50%,30px);
-
-    background:#0c2e58;
-
-    border:
-        1px solid
-        rgba(244,197,66,.5);
-
-    padding:13px 20px;
-
-    border-radius:10px;
+    transform:translate(-50%,30px);
 
     opacity:0;
 
-    pointer-events:none;
+    background:#0d315d;
+
+    border:1px solid #f4c542;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    z-index:999;
 
     transition:.3s;
 
-    z-index:100;
+    pointer-events:none;
 }
 
 .toast.show{
-
     opacity:1;
-
-    transform:
-        translate(-50%,0);
+    transform:translate(-50%,0);
 }
 
-/* =====================================================
-   ANIMATIONS
-===================================================== */
-
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-    }
-
-    to{
-        opacity:1;
-    }
-}
-
-@keyframes slideUp{
-
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+/* =========================
+   ANIMATION
+========================= */
 
 @keyframes float{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
 }
 
 @keyframes spin{
-
-    to{
-        transform:rotate(360deg);
-    }
+    to{transform:rotate(360deg)}
 }
 
 @keyframes shine{
-
-    0%{
-        background-position:0%;
-    }
-
-    100%{
-        background-position:200%;
-    }
+    from{background-position:0}
+    to{background-position:200%}
 }
 
-/* =====================================================
-   PRINT
-===================================================== */
-
-@media print{
-
-    body{
-        background:white !important;
-    }
-
-    body::before{
-        display:none;
-    }
-
-    .header,
-    .title,
-    .ticket-actions{
-        display:none !important;
-    }
-
-    #ticketSection{
-        display:block !important;
-
-        padding:0 !important;
-    }
-
-    .ticket-shell{
-
-        width:100%;
-
-        filter:none;
-    }
-
-    .ticket{
-
-        box-shadow:none;
-    }
-}
-
-/* =====================================================
+/* =========================
    MOBILE
-===================================================== */
+========================= */
 
-@media(max-width:750px){
+@media(max-width:700px){
 
     .rounds{
-
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
     .matches{
+        grid-template-columns:1fr;
+    }
 
+    .infos{
         grid-template-columns:1fr;
     }
 
     .seats{
-
-        grid-template-columns:1fr;
-    }
-
-    .info-grid{
-
         grid-template-columns:1fr;
     }
 
     .ticket{
-
         grid-template-columns:1fr;
     }
 
     .ticket-stub{
-
-        min-height:310px;
-
         order:-1;
-    }
-
-    .ticket-stub::before{
-
-        left:0;
-
-        right:0;
-
-        top:auto;
-
-        bottom:-1px;
+        min-height:300px;
 
         border-left:0;
-
-        border-top:
-            2px dashed
-            #d0c9b9;
+        border-bottom:2px dashed #ddd;
     }
 
-    .ticket-details{
-
-        grid-template-columns:
-            repeat(2,1fr);
+    .ticket-info{
+        grid-template-columns:repeat(2,1fr);
     }
 
     .ticket-user{
-
         grid-template-columns:1fr;
     }
 
-    .ticket-actions{
-
+    .actions{
         flex-direction:column;
     }
+}
 
+/* =========================
+   PRINT
+========================= */
+
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    body:before,
+    body:after{
+        display:none;
+    }
+
+    header,
+    .section-title,
+    .actions{
+        display:none !important;
+    }
+
+    .ticket-area{
+        display:block !important;
+        padding:0;
+    }
+
+    .ticket{
+        width:100%;
+        box-shadow:none;
+    }
 }
 
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =====================================================
+<!-- ==================================================
      INTRO
-===================================================== -->
+================================================== -->
 
 <section id="intro">
 
-    <div class="intro-content">
+<div class="intro-box">
 
-        <div class="logo-orb">
-            <span>AVL</span>
-        </div>
+    <div class="logo">
+        <span>AVL</span>
+    </div>
 
-        <h1 class="intro-title">
-            AVL
-        </h1>
+    <div class="intro-title">
+        AVL
+    </div>
 
-        <div class="intro-league">
-            ARABIC VIRTUAL LEAGUE
-        </div>
+    <div class="subtitle">
+        ARABIC VIRTUAL LEAGUE • SEASON 1
+    </div>
 
-        <p class="intro-message">
+    <div class="welcome">
 
-            نتمنى أن تستمتع لمباريات دوري
-            <b>ARABIC VIRTUAL LEAGUE</b>
-            وحظ سعيد
+        نتمنى أن تستمتع لمباريات دوري
+        <strong>ARABIC VIRTUAL LEAGUE</strong>
+        وحظ سعيد
 
-            <br>
+        <br>
 
-            We hope you enjoy the ARABIC VIRTUAL LEAGUE matches.
-            Good luck!
-
-        </p>
-
-        <!-- IMPORTANT:
-             No inline onclick here.
-             JavaScript connects the button safely.
-        -->
-
-        <button
-            type="button"
-            class="get-ticket"
-            id="getTicketBtn"
-        >
-            GET TICKET
-        </button>
+        We hope you enjoy the ARABIC VIRTUAL LEAGUE matches.
+        Good luck!
 
     </div>
+
+    <button
+        type="button"
+        class="get-ticket"
+        id="getTicket"
+    >
+        GET TICKET
+    </button>
+
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     APPLICATION
-===================================================== -->
+<!-- ==================================================
+     APP
+================================================== -->
 
-<main id="app" class="hidden">
+<div id="app" class="hidden">
+
+<header>
+
+<div class="header-inner">
+
+    <div class="brand">
+        AVL
+        <small>ARABIC VIRTUAL LEAGUE</small>
+    </div>
+
+    <div
+        class="status"
+        id="status"
+    >
+        PLAYER INFORMATION
+    </div>
+
+</div>
+
+</header>
 
 
-<!-- HEADER -->
+<!-- ==================================================
+     USER FORM
+================================================== -->
 
-<header class="header">
+<section
+    id="userPage"
+    class="section"
+>
 
-   
+<div class="container">
+
+<div class="section-title">
+
+<h1>
+Player Information
+</h1>
+
+<p>
+Complete your information to get your AVL ticket
+</p>
+
+</div>
+
+
+<div class="form-box">
+
+<div class="field">
+
+<label>
+USER DISCORD
+</label>
+
+<input
+    id="discord"
+    type="text"
+    placeholder="Enter your Discord username"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+USER ROBLOX
+</label>
+
+<input
+    id="roblox"
+    type="text"
+    placeholder="Enter your Roblox username"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+YOUR RANKS IN AVL
+</label>
+
+<select id="rank">
+
+<option value="">
+Select your rank
+</option>
+
+<option>Player</option>
+<option>Captain</option>
+<option>Manager</option>
+<option>Owner</option>
+<option>Referee</option>
+<option>Staff</option>
+<option>Fan</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+WHAT'S YOUR FAVOURITE TEAM
+</label>
+
+<select id="favorite">
+
+<option value="">
+Select your favourite team
+</option>
+
+<option>KAC</option>
+<option>KACM</option>
+<option>WAC</option>
+<option>CRB</option>
+<option>JSK</option>
+<option>RCA</option>
+<option>MAS</option>
+<option>IRT</option>
+
+</select>
+
+</div>
+
+
+<button
+    type="button"
+    class="continue"
+    id="continue"
+>
+CONTINUE →
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     ROUNDS
+================================================== -->
+
+<section
+    id="roundPage"
+    class="section hidden"
+>
+
+<div class="container">
+
+<div class="section-title">
+
+<h1>
+AVL FIXTURE S1
+</h1>
+
+<p>
+Choose a round
+</p>
+
+</div>
+
+
+<div
+    id="rounds"
+    class="rounds"
+></div>
+
+
+<div
+    id="matches"
+    class="matches"
+></div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     BUY
+================================================== -->
+
+<section
+    id="buyPage"
+    class="section hidden"
+>
+
+<div class="container">
+
+<div class="buy-box">
+
+<button
+    type="button"
+    class="back"
+    id="back"
+>
+← BACK TO MATCHES
+</button>
+
+
+<div
+    id="matchName"
+    class="match-name"
+>
+</div>
+
+
+<div class="infos">
+
+<div class="info">
+<small>STADIUM</small>
+<strong>N/A</strong>
+</div>
+
+<div class="info">
+<small>TIME</small>
+<strong>N/A</strong>
+</div>
+
+<div class="info">
+<small>ROUND</small>
+<strong id="buyRound"></strong>
+</div>
+
+<div class="info">
+<small>STATUS</small>
+<strong style="color:#35df91">
+AVAILABLE
+</strong>
+</div>
+
+</div>
+
+
+<h3 class="seat-title">
+PLACE OF SEAT
+</h3>
+
+
+<div class="seats">
+
+<div class="seat">
+
+<input
+    type="radio"
+    name="seat"
+    id="sud"
+    value="SUD"
+    data-price="10"
+>
+
+<label for="sud">
+
+<strong>SUD</strong>
+<span>10 ROBUX</span>
+
+</label>
+
+</div>
+
+
+<div class="seat">
+
+<input
+    type="radio"
+    name="seat"
+    id="nord"
+    value="NORD"
+    data-price="20"
+>
+
+<label for="nord">
+
+<strong>NORD</strong>
+<span>20 ROBUX</span>
+
+</label>
+
+</div>
+
+
+<div class="seat">
+
+<input
+    type="radio"
+    name="seat"
+    id="vip"
+    value="VIP"
+    data-price="50"
+>
+
+<label for="vip">
+
+<strong>VIP</strong>
+<span>50 ROBUX</span>
+
+</label>
+
+</div>
+
+</div>
+
+
+<button
+    type="button"
+    class="confirm"
+    id="confirm"
+>
+CONFIRM TICKET
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     TICKET
+================================================== -->
+
+<section
+    id="ticketPage"
+    class="ticket-area hidden"
+>
+
+<div class="container">
+
+<div class="section-title">
+
+<h1>
+YOUR OFFICIAL AVL TICKET
+</h1>
+
+<p>
+Ticket successfully generated
+</p>
+
+</div>
+
+
+<div class="ticket">
+
+
+<div class="ticket-main">
+
+<div class="ticket-header">
+
+<div class="ticket-logo">
+
+AVL
+
+<small>
+ARABIC VIRTUAL LEAGUE
+</small>
+
+</div>
+
+<div class="official">
+
+OFFICIAL MATCH TICKET
+<br>
+SEASON 1
+
+</div>
+
+</div>
+
+
+<div class="ticket-match">
+
+<div
+    class="ticket-round"
+    id="ticketRound"
+>
+ROUND 1
+</div>
+
+<div
+    class="ticket-teams"
+    id="ticketTeams"
+>
+KAC VS KACM
+</div>
+
+</div>
+
+
+<div class="ticket-info">
+
+<div>
+<small>STADIUM</small>
+<strong>N/A</strong>
+</div>
+
+<div>
+<small>TIME</small>
+<strong>N/A</strong>
+</div>
+
+<div>
+<small>DATE</small>
+<strong>TBA</strong>
+</div>
+
+<div>
+<small>GATE</small>
+<strong>TBA</strong>
+</div>
+
+<div>
+<small>SEAT</small>
+<strong id="ticketSeatMain">SUD</strong>
+</div>
+
+<div>
+<small>PRICE</small>
+<strong id="ticketPriceMain">10 ROBUX</strong>
+</div>
+
+</div>
+
+
+<div class="ticket-user">
+
+<div>
+DISCORD:
+<strong id="tDiscord"></strong>
+</div>
+
+<div>
+ROBLOX:
+<strong id="tRoblox"></strong>
+</div>
+
+<div>
+AVL RANK:
+<strong id="tRank"></strong>
+</div>
+
+<div>
+FAVOURITE:
+<strong id="tFavorite"></strong>
+</div>
+
+</div>
+
+
+<div class="notice">
+
+<strong>
+ملاحظة:
+</strong>
+
+تم شراء التذكرة. عند برمجة الوقت والملعب سوف يتم اخباركم في سيرفر AVL و سوف تصبح التذكرة متاحة للاستعمال.
+
+<br><br>
+
+<strong>
+NOTICE:
+</strong>
+
+Ticket purchased. Once the time and stadium are scheduled, you will be notified in the AVL server and the ticket will become available for use.
+
+</div>
+
+</div>
+
+
+<div class="ticket-stub">
+
+<div>
+
+<div class="stub-title">
+AVL ENTRY PASS
+</div>
+
+<div class="stub-seat">
+
+<small>SEAT</small>
+
+<strong id="ticketSeat">
+SUD
+</strong>
+
+</div>
+
+<div
+    class="stub-price"
+    id="ticketPrice"
+>
+10 ROBUX
+</div>
+
+</div>
+
+
+<div
+    class="qr"
+    id="qr"
+></div>
+
+
+<div class="ticket-id">
+
+TICKET ID
+
+<br>
+
+<span id="ticketId">
+AVL-S1
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+    class="print"
+    id="print"
+>
+PRINT / SAVE TICKET
+</button>
+
+<button
+    class="home"
+    id="home"
+>
+BACK TO HOME
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* ==================================================
+   AVL FIXTURES
+================================================== */
+
+const fixtures = {
+
+1:[
+["KAC","KACM"],
+["WAC","CRB"],
+["JSK","RCA"],
+["MAS","IRT"]
+],
+
+2:[
+["JSK","IRT"],
+["MAS","KACM"],
+["WAC","KAC"],
+["RCA","CRB"]
+],
+
+3:[
+["MAS","KAC"],
+["IRT","CRB"],
+["WAC","RCA"],
+["KACM","JSK"]
+],
+
+4:[
+["WAC","KACM"],
+["RCA","IRT"],
+["CRB","KAC"],
+["MAS","JSK"]
+],
+
+5:[
+["KAC","RCA"],
+["IRT","KACM"],
+["WAC","JSK"],
+["MAS","CRB"]
+],
+
+6:[
+["RCA","KACM"],
+["IRT","KAC"],
+["CRB","JSK"],
+["MAS","WAC"]
+],
+
+7:[
+["RCA","KAC"],
+["KACM","CRB"],
+["IRT","WAC"],
+["JSK","MAS"]
+],
+
+8:[
+["RCA","IRT"],
+["KAC","JSK"],
+["KACM","MAS"],
+["CRB","WAC"]
+]
+
+};
+
+
+/* ==================================================
+   VARIABLES
+================================================== */
+
+let user = {};
+let selectedRound = 1;
+let selectedMatch = null;
+
+
+/* ==================================================
+   ELEMENTS
+================================================== */
+
+const intro =
+document.getElementById("intro");
+
+const app =
+document.getElementById("app");
+
+const userPage =
+document.getElementById("userPage");
+
+const roundPage =
+document.getElementById("roundPage");
+
+const buyPage =
+document.getElementById("buyPage");
+
+const ticketPage =
+document.getElementById("ticketPage");
+
+
+/* ==================================================
+   GET TICKET
+================================================== */
+
+document
+.getElementById("getTicket")
+.addEventListener("click",function(){
+
+    intro.classList.add("hidden");
+
+    app.classList.remove("hidden");
+
+    userPage.classList.remove("hidden");
+
+    roundPage.classList.add("hidden");
+
+    buyPage.classList.add("hidden");
+
+    ticketPage.classList.add("hidden");
+
+    document.getElementById("status").textContent =
+        "PLAYER INFORMATION";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+});
+
+
+/* ==================================================
+   CONTINUE
+================================================== */
+
+document
+.getElementById("continue")
+.addEventListener("click",function(){
+
+    const discord =
+        document.getElementById("discord").value.trim();
+
+    const roblox =
+        document.getElementById("roblox").value.trim();
+
+    const rank =
+        document.getElementById("rank").value;
+
+    const favorite =
+        document.getElementById("favorite").value;
+
+
+    if(
+        !discord ||
+        !roblox ||
+        !rank ||
+        !favorite
+    ){
+
+        toast("Please complete all fields.");
+
+        return;
+    }
+
+
+    user = {
+        discord,
+        roblox,
+        rank,
+        favorite
+    };
+
+
+    userPage.classList.add("hidden");
+
+    roundPage.classList.remove("hidden");
+
+    document.getElementById("status").textContent =
+        "SELECT ROUND";
+
+
+    createRounds();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+});
+
+
+/* ==================================================
+   CREATE ROUNDS
+================================================== */
+
+function createRounds(){
+
+    const box =
+        document.getElementById("rounds");
+
+    box.innerHTML = "";
+
+
+    for(let i=1;i<=8;i++){
+
+        const button =
+            document.createElement("button");
+
+        button.className = "round";
+
+        button.type = "button";
+
+        button.textContent =
+            "ROUND " + i;
+
+
+        button.onclick = function(){
+
+            showRound(i,button);
+
+        };
+
+
+        box.appendChild(button);
+
+    }
+
+}
+
+
+/* ==================================================
+   SHOW ROUND
+================================================== */
+
+function showRound(round,button){
+
+    selectedRound = round;
+
+
+    document
+    .querySelectorAll(".round")
+    .forEach(function(x){
+
+        x.classList.remove("active");
+
+    });
+
+
+    button.classList.add("active");
+
+
+    const matches =
+        document.getElementById("matches");
+
+    matches.innerHTML = "";
+
+
+    fixtures[round].forEach(function(match){
+
+        const card =
+            document.createElement("div");
+
+        card.className = "match";
+
+
+        card.innerHTML = `
+
+            <div class="round-label">
+                AVL • ROUND ${round}
+            </div>
+
+            <div class="teams">
+                <span>${match[0]}</span>
+                <span class="vs">VS</span>
+                <span>${match[1]}</span>
+            </div>
+
+            <button
+                type="button"
+                class="buy"
+            >
+                BUY A TICKET
+            </button>
+
+        `;
+
+
+        card
+        .querySelector(".buy")
+        .onclick = function(){
+
+            openBuy(match);
+
+        };
+
+
+        matches.appendChild(card);
+
+    });
+
+
+    document.getElementById("status").textContent =
+        "SELECT MATCH";
+
+
+    matches.scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==================================================
+   OPEN BUY
+================================================== */
+
+function openBuy(match){
+
+    selectedMatch = match;
+
+
+    roundPage.classList.add("hidden");
+
+    buyPage.classList.remove("hidden");
+
+    ticketPage.classList.add("hidden");
+
+
+    document.getElementById("matchName").textContent =
+        match[0] + " VS " + match[1];
+
+
+    document.getElementById("buyRound").textContent =
+        "ROUND " + selectedRound;
+
+
+    document.getElementById("status").textContent =
+        "SELECT SEAT";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==================================================
+   BACK
+================================================== */
+
+document
+.getElementById("back")
+.addEventListener("click",function(){
+
+    buyPage.classList.add("hidden");
+
+    roundPage.classList.remove("hidden");
+
+    document.getElementById("status").textContent =
+        "SELECT MATCH";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+});
+
+
+/* ==================================================
+   CONFIRM
+================================================== */
+
+document
+.getElementById("confirm")
+.addEventListener("click",function(){
+
+    if(!selectedMatch){
+
+        toast("Please select a match.");
+
+        return;
+    }
+
+
+    const seat =
+        document.querySelector(
+            'input[name="seat"]:checked'
+        );
+
+
+    if(!seat){
+
+        toast("Please select a seat.");
+
+        return;
+    }
+
+
+    const seatName =
+        seat.value;
+
+    const price =
+        seat.dataset.price;
+
+
+    /* Ticket ID */
+
+    const ticketId =
+        "AVL-S1-" +
+        Math.random()
+        .toString(36)
+        .substring(2,7)
+        .toUpperCase() +
+        "-" +
+        Date.now()
+        .toString()
+        .slice(-5);
+
+
+    /* Ticket data */
+
+    document.getElementById("ticketRound")
+        .textContent =
+        "ROUND " + selectedRound;
+
+
+    document.getElementById("ticketTeams")
+        .textContent =
+        selectedMatch[0] +
+        " VS " +
+        selectedMatch[1];
+
+
+    document.getElementById("ticketSeat")
+        .textContent =
+        seatName;
+
+
+    document.getElementById("ticketSeatMain")
+        .textContent =
+        seatName;
+
+
+    document.getElementById("ticketPrice")
+        .textContent =
+        price + " ROBUX";
+
+
+    document.getElementById("ticketPriceMain")
+        .textContent =
+        price + " ROBUX";
+
+
+    document.getElementById("tDiscord")
+        .textContent =
+        user.discord;
+
+
+    document.getElementById("tRoblox")
+        .textContent =
+        user.roblox;
+
+
+    document.getElementById("tRank")
+        .textContent =
+        user.rank;
+
+
+    document.getElementById("tFavorite")
+        .textContent =
+        user.favorite;
+
+
+    document.getElementById("ticketId")
+        .textContent =
+        ticketId;
+
+
+    /* Fake QR visual */
+
+    const qr =
+        document.getElementById("qr");
+
+    qr.innerHTML = "";
+
+    for(let i=0;i<120;i++){
+
+        const square =
+            document.createElement("span");
+
+        square.style.position = "absolute";
+
+        square.style.width = "5px";
+        square.style.height = "5px";
+
+        square.style.left =
+            Math.floor(Math.random()*27)*5 + "px";
+
+        square.style.top =
+            Math.floor(Math.random()*27)*5 + "px";
+
+        square.style.background =
+            Math.random() > .5
+            ? "#000"
+            : "#fff";
+
+        qr.style.position = "relative";
+
+        qr.appendChild(square);
+
+    }
+
+
+    buyPage.classList.add("hidden");
+
+    ticketPage.classList.remove("hidden");
+
+
+    document.getElementById("status").textContent =
+        "TICKET GENERATED";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+});
+
+
+/* ==================================================
+   PRINT
+================================================== */
+
+document
+.getElementById("print")
+.addEventListener("click",function(){
+
+    window.print();
+
+});
+
+
+/* ==================================================
+   HOME
+================================================== */
+
+document
+.getElementById("home")
+.addEventListener("click",function(){
+
+    location.reload();
+
+});
+
+
+/* ==================================================
+   TOAST
+================================================== */
+
+function toast(message){
+
+    const box =
+        document.getElementById("toast");
+
+    box.textContent =
+        message;
+
+    box.classList.add("show");
+
+
+    setTimeout(function(){
+
+        box.classList.remove("show");
+
+    },2500);
+
+}
+
+</script>
+
+</body>
+</html>
